@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────
+   SÕEL Design Tokens
+   Brand: Ink Black + Amber on warm parchment
+───────────────────────────────────────── */
+
+:root {
+  /* Primary — Ink Black */
+  --soel-color-primary-900: #0D0D17;
+  --soel-color-primary-800: #1A1A2E;
+  --soel-color-primary-700: #2D2D4A;
+  --soel-color-primary-600: #3F3F66;
+  --soel-color-primary-500: #525282;
+  --soel-color-primary-400: #7575A8;
+  --soel-color-primary-300: #9E9EC8;
+  --soel-color-primary-100: #E8E8F4;
+  --soel-color-primary-50: #F4F4FA;
+
+  /* Accent — Amber */
+  --soel-color-amber-600: #CC9900;
+  --soel-color-amber-500: #FFD166;
+  --soel-color-amber-200: #FFF0B3;
+  --soel-color-amber-100: #FFFAE0;
+
+  /* Backgrounds */
+  --soel-color-bg-base: #F5F3EE;
+  --soel-color-bg-surface: #FFFFFF;
+  --soel-color-bg-elevated: #FDFCF9;
+  --soel-color-bg-muted: #EBE8E2;
+
+  /* Text */
+  --soel-color-text-primary: #1A1A2E;
+  --soel-color-text-secondary: #4A5568;
+  --soel-color-text-muted: #94A3B8;
+  --soel-color-text-inverse: #FFFFFF;
+
+  /* Border */
+  --soel-color-border-default: #E3E0D9;
+  --soel-color-border-strong: #C9C5BC;
+  --soel-color-border-brand: #1A1A2E;
+
+  /* Semantic */
+  --soel-color-success: #16A34A;
+  --soel-color-warning: #D97706;
+  --soel-color-error: #DC2626;
+  --soel-color-info: #0369A1;
+
+  /* Category Colors */
+  --soel-color-cat-claude-code: #1A1A2E;
+  --soel-color-cat-claude-code-bg: #E8E8F4;
+  --soel-color-cat-ai-tools: #0D4F4F;
+  --soel-color-cat-ai-tools-bg: #E6F5F5;
+  --soel-color-cat-tutorials: #7B3F00;
+  --soel-color-cat-tutorials-bg: #FFF4E6;
+  --soel-color-cat-news: #374151;
+  --soel-color-cat-news-bg: #F3F4F6;
+
+  /* Shadows (dropdowns/modals ONLY — never cards) */
+  --soel-shadow-xs: 0 1px 2px rgba(26, 26, 46, 0.05);
+  --soel-shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.07);
+  --soel-shadow-md: 0 4px 20px rgba(26, 26, 46, 0.09);
+  --soel-shadow-lg: 0 8px 40px rgba(26, 26, 46, 0.12);
+
+  /* Font Families */
+  --soel-font-display: "Fraunces", serif;
+  --soel-font-body: "DM Sans", sans-serif;
+  --soel-font-label: "Epilogue", sans-serif;
+  --soel-font-mono: "JetBrains Mono", monospace;
+
+  /* Font Sizes */
+  --soel-text-xs: 0.625rem;
+  --soel-text-sm: 0.75rem;
+  --soel-text-base: 0.875rem;
+  --soel-text-md: 1rem;
+  --soel-text-lg: 1.125rem;
+  --soel-text-xl: 1.25rem;
+  --soel-text-2xl: 1.5rem;
+  --soel-text-3xl: 2rem;
+  --soel-text-4xl: 2.5rem;
+  --soel-text-5xl: 3.5rem;
+
+  /* Font Weights */
+  --soel-weight-light: 300;
+  --soel-weight-regular: 400;
+  --soel-weight-medium: 500;
+  --soel-weight-semibold: 600;
+  --soel-weight-bold: 700;
+  --soel-weight-black: 900;
+
+  /* Line Heights */
+  --soel-leading-tight: 0.95;
+  --soel-leading-snug: 1.15;
+  --soel-leading-normal: 1.5;
+  --soel-leading-relaxed: 1.7;
+
+  /* Letter Spacing */
+  --soel-tracking-tight: -0.03em;
+  --soel-tracking-snug: -0.015em;
+  --soel-tracking-normal: 0;
+  --soel-tracking-wide: 0.06em;
+  --soel-tracking-wider: 0.12em;
+  --soel-tracking-widest: 0.22em;
+
+  /* Spacing — 8pt grid */
+  --soel-space-1: 0.25rem;
+  --soel-space-2: 0.5rem;
+  --soel-space-3: 0.75rem;
+  --soel-space-4: 1rem;
+  --soel-space-5: 1.25rem;
+  --soel-space-6: 1.5rem;
+  --soel-space-8: 2rem;
+  --soel-space-10: 2.5rem;
+  --soel-space-12: 3rem;
+  --soel-space-16: 4rem;
+  --soel-space-20: 5rem;
+  --soel-space-24: 6rem;
+
+  /* Border Radius */
+  --soel-radius-sm: 4px;
+  --soel-radius-md: 8px;
+  --soel-radius-lg: 12px;
+  --soel-radius-pill: 999px;
+
+  /* Layout */
+  --soel-container-max: 1280px;
+  --soel-nav-height: 56px;
+
+  /* Transitions */
+  --soel-transition-fast: 150ms ease;
+  --soel-transition-base: 250ms ease;
+  --soel-transition-slow: 400ms ease;
+
+  /* Z-Index Stack */
+  --soel-z-base: 0;
+  --soel-z-raised: 10;
+  --soel-z-dropdown: 100;
+  --soel-z-sticky: 200;
+  --soel-z-nav: 300;
+  --soel-z-modal: 400;
+  --soel-z-toast: 500;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+img, video, svg { display: block; max-width: 100%; }
+button { cursor: pointer; font: inherit; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+
+/* ─── Base Body ─── */
+body {
+  font-family: var(--soel-font-body);
+  font-size: var(--soel-text-md);
+  font-weight: var(--soel-weight-regular);
+  line-height: var(--soel-leading-normal);
+  color: var(--soel-color-text-primary);
+  background-color: var(--soel-color-bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography System ─── */
+
+.soel-display-xl {
+  font-family: var(--soel-font-display);
+  font-size: clamp(var(--soel-text-4xl), 6vw, var(--soel-text-5xl));
+  font-weight: var(--soel-weight-black);
+  line-height: var(--soel-leading-tight);
+  letter-spacing: var(--soel-tracking-snug);
+  color: var(--soel-color-text-primary);
+}
+.soel-display-lg {
+  font-family: var(--soel-font-display);
+  font-size: clamp(var(--soel-text-3xl), 4vw, var(--soel-text-4xl));
+  font-weight: var(--soel-weight-bold);
+  line-height: var(--soel-leading-tight);
+  letter-spacing: var(--soel-tracking-snug);
+}
+.soel-display-md {
+  font-family: var(--soel-font-display);
+  font-size: var(--soel-text-2xl);
+  font-weight: var(--soel-weight-bold);
+  line-height: var(--soel-leading-snug);
+  letter-spacing: var(--soel-tracking-snug);
+}
+.soel-display-sm {
+  font-family: var(--soel-font-display);
+  font-size: var(--soel-text-xl);
+  font-weight: var(--soel-weight-bold);
+  line-height: var(--soel-leading-snug);
+  letter-spacing: var(--soel-tracking-snug);
+}
+
+.soel-body-lg { font-family: var(--soel-font-body); font-size: var(--soel-text-lg); line-height: var(--soel-leading-relaxed); }
+.soel-body-md { font-family: var(--soel-font-body); font-size: var(--soel-text-md); line-height: var(--soel-leading-normal); }
+.soel-body-sm { font-family: var(--soel-font-body); font-size: var(--soel-text-base); line-height: var(--soel-leading-normal); }
+.soel-body-xs { font-family: var(--soel-font-body); font-size: var(--soel-text-sm); line-height: var(--soel-leading-normal); }
+
+.soel-label-lg {
+  font-family: var(--soel-font-label);
+  font-size: var(--soel-text-sm);
+  font-weight: var(--soel-weight-bold);
+  letter-spacing: var(--soel-tracking-wider);
+  text-transform: uppercase;
+}
+.soel-label-md {
+  font-family: var(--soel-font-label);
+  font-size: var(--soel-text-xs);
+  font-weight: var(--soel-weight-bold);
+  letter-spacing: var(--soel-tracking-widest);
+  text-transform: uppercase;
+}
+
+/* ─── Layout Container ─── */
+.soel-container {
+  width: 100%;
+  max-width: var(--soel-container-max);
+  margin: 0 auto;
+  padding: 0 var(--soel-space-10);
+}
+@media (max-width: 768px) {
+  .soel-container { padding: 0 var(--soel-space-4); }
+}
+
+/* ─── Focus Styles ─── */
+:focus-visible {
+  outline: 2px solid var(--soel-color-primary-800);
+  outline-offset: 2px;
+  border-radius: var(--soel-radius-sm);
+}
+
+/* ─── Skeleton Loading ─── */
+.soel-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--soel-color-bg-muted) 25%,
+    var(--soel-color-bg-elevated) 50%,
+    var(--soel-color-bg-muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: soel-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--soel-radius-md);
+}
+@keyframes soel-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Mobile Responsive ─── */
+@media (max-width: 768px) {
+  .soel-hero-grid {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+  .soel-hero-grid > a:first-child > div { min-height: 260px !important; }
+
+  .soel-article-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .soel-hero-grid > a:first-child > div { min-height: 200px !important; }
+}
+
+/* ─── Tailwind Theme Bridge ─── */
+@theme inline {
+  --color-background: var(--soel-color-bg-base);
+  --color-foreground: var(--soel-color-text-primary);
+  --font-sans: var(--soel-font-body);
+  --font-mono: var(--soel-font-mono);
+}
