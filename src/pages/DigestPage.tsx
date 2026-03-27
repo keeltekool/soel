@@ -1,10 +1,15 @@
 import { useArticles, useConfig } from "@/lib/data";
 import { formatDateLong, getTodayISO } from "@/lib/utils";
 import DigestSection from "@/components/DigestSection";
+import type { Feed } from "@/lib/types";
 
-export default function DigestPage() {
-  const { articles, loading: articlesLoading } = useArticles();
-  const { config, loading: configLoading } = useConfig();
+interface DigestPageProps {
+  feed?: Feed;
+}
+
+export default function DigestPage({ feed = "ai-tools" }: DigestPageProps) {
+  const { articles, loading: articlesLoading } = useArticles(feed);
+  const { config, loading: configLoading } = useConfig(feed);
   const loading = articlesLoading || configLoading;
 
   return (
@@ -58,7 +63,7 @@ export default function DigestPage() {
       {!loading && articles.length === 0 && (
         <div style={{ textAlign: "center", padding: "var(--soel-space-16) var(--soel-space-4)" }}>
           <h2 className="soel-display-sm" style={{ marginBottom: "var(--soel-space-2)" }}>
-            No articles today
+            No articles yet
           </h2>
           <p className="soel-body-md" style={{ color: "var(--soel-color-text-secondary)" }}>
             Check back later — the research loops are always running.

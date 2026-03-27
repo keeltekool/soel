@@ -1,66 +1,69 @@
 import { useState, useEffect } from "react";
-import type { Article, SectionConfig } from "./types";
+import type { Article, SectionConfig, Feed } from "./types";
 import { MOCK_ARTICLES, MOCK_CONFIG } from "./mock-data";
 import { fetchArticlesFromSheets, fetchConfigFromSheets, isSheetsConfigured } from "./sheets";
 
-let cachedArticles: Article[] | null = null;
-let cachedConfig: SectionConfig[] | null = null;
+const cachedArticles: Record<string, Article[]> = {};
+const cachedConfig: Record<string, SectionConfig[]> = {};
 
-async function loadArticles(): Promise<Article[]> {
-  if (cachedArticles) return cachedArticles;
+async function loadArticles(feed: Feed): Promise<Article[]> {
+  if (cachedArticles[feed]) return cachedArticles[feed];
   if (isSheetsConfigured()) {
-    cachedArticles = await fetchArticlesFromSheets();
+    cachedArticles[feed] = await fetchArticlesFromSheets(feed);
   } else {
-    cachedArticles = MOCK_ARTICLES;
+    cachedArticles[feed] = MOCK_ARTICLES;
   }
-  return cachedArticles;
+  return cachedArticles[feed];
 }
 
-async function loadConfig(): Promise<SectionConfig[]> {
-  if (cachedConfig) return cachedConfig;
+async function loadConfig(feed: Feed): Promise<SectionConfig[]> {
+  if (cachedConfig[feed]) return cachedConfig[feed];
   if (isSheetsConfigured()) {
-    cachedConfig = await fetchConfigFromSheets();
+    cachedConfig[feed] = await fetchConfigFromSheets(feed);
   } else {
-    cachedConfig = MOCK_CONFIG;
+    cachedConfig[feed] = MOCK_CONFIG;
   }
-  return cachedConfig;
+  return cachedConfig[feed];
 }
 
-export function useArticles() {
+export function useArticles(feed: Feed = "ai-tools") {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadArticles()
+    setLoading(true);
+    loadArticles(feed)
       .then(setArticles)
       .catch(() => setArticles(MOCK_ARTICLES))
       .finally(() => setLoading(false));
-  }, []);
+  }, [feed]);
 
   return { articles, loading };
 }
 
-export function useConfig() {
+export function useConfig(feed: Feed = "ai-tools") {
   const [config, setConfig] = useState<SectionConfig[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadConfig()
+    setLoading(true);
+    loadConfig(feed)
       .then(setConfig)
       .catch(() => setConfig(MOCK_CONFIG))
       .finally(() => setLoading(false));
-  }, []);
+  }, [feed]);
 
   return { config, loading };
 }
 
 export function useArticle(id: string) {
-  const { articles, loading } = useArticles();
+  const feed: Feed = id.startsWith("indie-builders-") ? "indie-builders" : "ai-tools";
+  const { articles, loading } = useArticles(feed);
   const article = articles.find((a) => a.id === id) || null;
   return { article, articles, loading };
 }
 
 export function invalidateCache() {
-  cachedArticles = null;
-  cachedConfig = null;
+  for (const key of Object.keys(cachedArticles)) delete cachedArticles[key];
+  for (const key of Object.keys(cachedConfig)) delete cachedConfig[key];
 }

@@ -1,7 +1,12 @@
-import type { Article, SectionConfig } from "./types";
+import type { Article, SectionConfig, Feed } from "./types";
 
 const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEET_ID;
 const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+
+const FEED_TABS: Record<Feed, { articles: string; config: string }> = {
+  "ai-tools": { articles: "Articles", config: "Config" },
+  "indie-builders": { articles: "IndieArticles", config: "IndieConfig" },
+};
 
 async function fetchRange(tab: string, range: string): Promise<string[][]> {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${tab}!${range}?key=${API_KEY}`;
@@ -11,10 +16,11 @@ async function fetchRange(tab: string, range: string): Promise<string[][]> {
   return data.values || [];
 }
 
-export async function fetchArticlesFromSheets(): Promise<Article[]> {
-  const rows = await fetchRange("Articles", "A2:M1000");
+export async function fetchArticlesFromSheets(feed: Feed = "ai-tools"): Promise<Article[]> {
+  const tab = FEED_TABS[feed].articles;
+  const rows = await fetchRange(tab, "A2:M1000");
   return rows.map((row, i) => ({
-    id: String(i + 1),
+    id: `${feed}-${i + 1}`,
     date: row[0] || "",
     title: row[1] || "",
     author: row[2] || "",
@@ -30,8 +36,9 @@ export async function fetchArticlesFromSheets(): Promise<Article[]> {
   }));
 }
 
-export async function fetchConfigFromSheets(): Promise<SectionConfig[]> {
-  const rows = await fetchRange("Config", "A2:H100");
+export async function fetchConfigFromSheets(feed: Feed = "ai-tools"): Promise<SectionConfig[]> {
+  const tab = FEED_TABS[feed].config;
+  const rows = await fetchRange(tab, "A2:H100");
   return rows
     .map((row) => ({
       sectionName: row[0] || "",

@@ -1,7 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { formatDateLong, getTodayISO } from "@/lib/utils";
 
+const FEEDS = [
+  { path: "/", label: "AI Tools" },
+  { path: "/indie", label: "Indie Builders" },
+] as const;
+
 export default function Navbar() {
+  const { pathname } = useLocation();
+
   return (
     <nav
       style={{
@@ -41,9 +48,45 @@ export default function Navbar() {
           SÕEL
         </Link>
 
+        {/* Feed switcher */}
+        <div
+          style={{
+            display: "flex",
+            gap: "var(--soel-space-1)",
+            background: "var(--soel-color-surface-raised, rgba(26, 26, 46, 0.06))",
+            borderRadius: "var(--soel-radius-lg)",
+            padding: "3px",
+          }}
+        >
+          {FEEDS.map(({ path, label }) => {
+            const isActive = pathname === path;
+            return (
+              <Link
+                key={path}
+                to={path}
+                style={{
+                  fontFamily: "var(--soel-font-label)",
+                  fontSize: "var(--soel-text-xs)",
+                  fontWeight: 700,
+                  letterSpacing: "var(--soel-tracking-wider)",
+                  textTransform: "uppercase",
+                  padding: "6px 12px",
+                  borderRadius: "var(--soel-radius-lg)",
+                  color: isActive ? "var(--soel-color-primary-800)" : "var(--soel-color-text-secondary)",
+                  background: isActive ? "var(--soel-color-accent, #FFD166)" : "transparent",
+                  transition: "all 0.15s ease",
+                  textDecoration: "none",
+                }}
+              >
+                {label}
+              </Link>
+            );
+          })}
+        </div>
+
         <span
           className="soel-body-sm"
-          style={{ color: "var(--soel-color-text-secondary)" }}
+          style={{ color: "var(--soel-color-text-secondary)", display: "none" }}
         >
           {formatDateLong(getTodayISO())}
         </span>
