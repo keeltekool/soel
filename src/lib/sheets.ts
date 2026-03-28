@@ -6,6 +6,7 @@ const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 const FEED_TABS: Record<Feed, { articles: string; config: string }> = {
   "ai-tools": { articles: "Articles", config: "Config" },
   "indie-builders": { articles: "IndieArticles", config: "IndieConfig" },
+  "youtube": { articles: "YouTubeVideos", config: "YouTubeConfig" },
 };
 
 async function fetchRange(tab: string, range: string): Promise<string[][]> {

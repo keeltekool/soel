@@ -4,6 +4,9 @@ export const CATEGORIES = [
   { value: "ai-tools", label: "AI Tools", color: "#0D4F4F", bg: "#E6F5F5" },
   { value: "tutorials", label: "Tutorials", color: "#7B3F00", bg: "#FFF4E6" },
   { value: "news", label: "News", color: "#374151", bg: "#F3F4F6" },
+  // YouTube feed (YouTubeVideos tab) — shared: claude-code, ai-tools, tutorials, news
+  { value: "webdev", label: "Web Dev", color: "#1D4ED8", bg: "#DBEAFE" },
+  { value: "api-design", label: "API Design", color: "#047857", bg: "#D1FAE5" },
   // Indie Builders feed (IndieArticles tab)
   { value: "shipping", label: "Shipping & Launches", color: "#7C3AED", bg: "#EDE9FE" },
   { value: "building", label: "Building in Public", color: "#059669", bg: "#D1FAE5" },

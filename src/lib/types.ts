@@ -1,4 +1,4 @@
-export type Feed = "ai-tools" | "indie-builders";
+export type Feed = "ai-tools" | "indie-builders" | "youtube";
 
 export interface Article {
   id: string;

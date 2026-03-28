@@ -10,6 +10,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<DigestPage feed="ai-tools" />} />
         <Route path="/indie" element={<DigestPage feed="indie-builders" />} />
+        <Route path="/youtube" element={<DigestPage feed="youtube" />} />
         <Route path="/article/:id" element={<ArticlePage />} />
         <Route path="/archive" element={<ArchivePage />} />
       </Route>

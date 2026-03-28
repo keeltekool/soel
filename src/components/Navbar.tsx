@@ -4,6 +4,7 @@ import { formatDateLong, getTodayISO } from "@/lib/utils";
 const FEEDS = [
   { path: "/", label: "AI Tools" },
   { path: "/indie", label: "Indie Builders" },
+  { path: "/youtube", label: "YouTube" },
 ] as const;
 
 export default function Navbar() {
