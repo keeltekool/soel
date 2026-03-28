@@ -9,7 +9,7 @@ AI-curated daily digest of the best articles, rendered as a mobile-first PWA.
 | Framework | React 19 + Vite 7 | NOT Next.js — pure SPA |
 | Language | TypeScript 5.9 | Strict mode, `@/*` path alias |
 | Styling | Tailwind CSS 4 | Via `@tailwindcss/vite` plugin |
-| Routing | React Router 7 | `/`, `/article/:id`, `/archive` |
+| Routing | React Router 7 | `/`, `/indie`, `/youtube`, `/article/:id`, `/archive` |
 | PWA | vite-plugin-pwa | autoUpdate, standalone, offline caching |
 | Data | Google Sheets API v4 | Public read via API key, no OAuth |
 | Hosting | Vercel | Auto-detected Vite config |
@@ -85,6 +85,14 @@ src/
 | L | scrapedAt | ISO datetime |
 | M | status | new/featured |
 
+### YouTubeVideos tab (same A-M schema as Articles)
+
+Same columns as Articles. Source is always "youtube". Categories: claude-code, ai-tools, webdev, tutorials, api-design, news.
+
+### YouTubeConfig tab (same A-H schema as Config)
+
+5 sections: Top Picks (hero, score 8+), Claude Code & AI Tools (grid, claude-code, 6+), Web Dev & Frameworks (grid, webdev, 6+), Tutorials & Deep Dives (list, tutorials, 5+), Latest Videos (list, 5+).
+
 ### Config tab (A2:H100)
 
 | Col | Field | Type |
@@ -112,12 +120,25 @@ src/
 - **Path alias:** `@/*` maps to `src/*` — configured in both `vite.config.ts` and `tsconfig.app.json`.
 - **No SSR:** Pure client-side SPA. Vercel serves `index.html` for all routes.
 - **UI rules:** `rounded-lg` only (never xl/2xl). Shadows only on dropdowns/modals. No card-in-card nesting.
+- **YouTube cards open externally:** YouTube source articles use `<a href target="_blank">` instead of internal `<Link>` — they go straight to YouTube.
+- **Sheet column K header must be "reserved"** (not empty) — empty header breaks Sheets API append range detection, causing data to land in wrong columns.
+- **gws payload size limit:** Bulk writes via `gws sheets spreadsheets values append --json` fail on Windows if payload exceeds ~8KB. Use `execFileSync('gws', [...args])` from node with batches of 8-10 rows.
+
+## YouTube Loop
+
+- **Loop ID:** `27c68ac0-77a5-45db-b4dd-5950d3023952` (LCC)
+- **Prompt:** `loop-control-center/Soel/youtube-loop-prompt.md`
+- **Sources:** `loop-control-center/Soel/sources/youtube_channels.csv` (73 channels, 14 Claude Code tier-1)
+- **Schedule:** daily 4:33 AM local via CronCreate (session-bound, must recreate each session)
+- **First run:** 2026-03-28, 175 videos written (7-day lookback). Daily runs use 48h lookback.
 
 ## Post-Deploy Smoke Tests
 
 1. Load https://soel-sigma.vercel.app — hero section renders with articles
 2. Click an article — detail page shows image, summary, "Read Original" CTA
-3. Navigate to /archive — articles grouped by date
-4. Check DevTools console — no errors
-5. Check Network tab — Sheets API calls succeed (or mock data if not configured)
-6. Test on mobile viewport — single-column layout, readable text
+3. Navigate to /youtube — YouTube tab shows video cards with thumbnails
+4. Click a YouTube card — opens YouTube video directly (not internal page)
+5. Navigate to /archive — articles grouped by date
+6. Check DevTools console — no errors
+7. Check Network tab — Sheets API calls succeed (or mock data if not configured)
+8. Test on mobile viewport — single-column layout, readable text
