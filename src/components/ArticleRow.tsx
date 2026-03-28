@@ -2,6 +2,13 @@ import { Link } from "react-router-dom";
 import type { Article } from "@/lib/types";
 import { formatRelativeTime } from "@/lib/utils";
 
+function RowLink({ article, children }: { article: Article; children: React.ReactNode }) {
+  if (article.source === "youtube") {
+    return <a href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>{children}</a>;
+  }
+  return <Link to={`/article/${article.id}`} style={{ textDecoration: "none" }}>{children}</Link>;
+}
+
 interface ArticleRowProps {
   article: Article;
 }
@@ -10,7 +17,7 @@ export default function ArticleRow({ article }: ArticleRowProps) {
   const isHighScore = article.score >= 8;
 
   return (
-    <Link to={`/article/${article.id}`} style={{ textDecoration: "none" }}>
+    <RowLink article={article}>
       <div
         style={{
           display: "flex",
@@ -77,6 +84,6 @@ export default function ArticleRow({ article }: ArticleRowProps) {
           </p>
         </div>
       </div>
-    </Link>
+    </RowLink>
   );
 }

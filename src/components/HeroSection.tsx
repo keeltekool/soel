@@ -2,6 +2,13 @@ import { Link } from "react-router-dom";
 import type { Article } from "@/lib/types";
 import { getCategoryStyle, getCategoryLabel } from "@/lib/utils";
 
+function ArticleLink({ article, children, style }: { article: Article; children: React.ReactNode; style?: React.CSSProperties }) {
+  if (article.source === "youtube") {
+    return <a href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", ...style }}>{children}</a>;
+  }
+  return <Link to={`/article/${article.id}`} style={{ textDecoration: "none", ...style }}>{children}</Link>;
+}
+
 interface HeroSectionProps {
   articles: Article[];
 }
@@ -24,7 +31,7 @@ export default function HeroSection({ articles }: HeroSectionProps) {
       }}
     >
       {/* Main hero */}
-      <Link to={`/article/${featured.id}`} style={{ textDecoration: "none" }}>
+      <ArticleLink article={featured}>
         <div
           style={{
             position: "relative",
@@ -132,7 +139,7 @@ export default function HeroSection({ articles }: HeroSectionProps) {
             </p>
           </div>
         </div>
-      </Link>
+      </ArticleLink>
 
       {/* Secondary cards */}
       {secondary.length > 0 && (
@@ -140,7 +147,7 @@ export default function HeroSection({ articles }: HeroSectionProps) {
           {secondary.map((article) => {
             const sCatStyle = getCategoryStyle(article.category);
             return (
-              <Link key={article.id} to={`/article/${article.id}`} style={{ textDecoration: "none", flex: 1 }}>
+              <ArticleLink key={article.id} article={article} style={{ flex: 1 }}>
                 <div
                   style={{
                     position: "relative",
@@ -234,7 +241,7 @@ export default function HeroSection({ articles }: HeroSectionProps) {
                     </p>
                   </div>
                 </div>
-              </Link>
+              </ArticleLink>
             );
           })}
         </div>

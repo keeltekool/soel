@@ -6,12 +6,19 @@ interface ArticleCardProps {
   article: Article;
 }
 
+function CardWrapper({ article, children }: { article: Article; children: React.ReactNode }) {
+  if (article.source === "youtube") {
+    return <a href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>{children}</a>;
+  }
+  return <Link to={`/article/${article.id}`} style={{ textDecoration: "none" }}>{children}</Link>;
+}
+
 export default function ArticleCard({ article }: ArticleCardProps) {
   const catStyle = getCategoryStyle(article.category);
   const isHighScore = article.score >= 8;
 
   return (
-    <Link to={`/article/${article.id}`} style={{ textDecoration: "none" }}>
+    <CardWrapper article={article}>
       <article
         style={{
           display: "flex",
@@ -171,6 +178,6 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           </span>
         </div>
       </article>
-    </Link>
+    </CardWrapper>
   );
 }
